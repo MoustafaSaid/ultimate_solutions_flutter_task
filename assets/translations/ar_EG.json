@@ -1,0 +1,23 @@
+{
+  "welcomeBack":"أهلاً بعودتك!",
+  "logBack":"سجّل دخولك مجددًا",
+  "userId":"اسم المستخدم",
+  "password":"كلمة المرور",
+  "showMore":"إظهار المزيد",
+  "logIn":"تسجيل الدخول",
+  "chooseLanguage":"اختر اللغة",
+  "apply":"تطبيق",
+  "arabic":"العربية",
+  "english":"الإنجليزية",
+  "others":"أخرى",
+  "noOrdersTitle":"لا توجد طلبات حتى الآن",
+  "noOrdersSubTitle":"لا توجد طلبات في سجلّك.",
+  "status":"الحالة",
+  "totalPrice":"إجمالي السعر",
+  "date":"التاريخ",
+  "orderDetails":"تفاصيل الطلب",
+  "delivering":"جاري التوصيل",
+  "returned":"تم الإرجاع",
+  "delivered":"تم التسليم",
+  "newItems":"جديد"
+}

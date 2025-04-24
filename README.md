@@ -1,16 +1,99 @@
-# ultimate_solution_flutter_task
+# Ultimate Solution Flutter Task
 
-A new Flutter project.
+A clean architecture Flutter project with feature-based organization.
+
+## Project Structure
+
+This project follows a clean architecture approach with feature-based organization:
+
+```
+lib/
+├── core/
+│   ├── constants/
+│   │   ├── colors.dart
+│   │   ├── strings.dart
+│   │   └── dimensions.dart
+│   ├── utils/
+│   │   ├── error_handler.dart
+│   │   ├── activity_manager.dart
+│   ├── services/
+│   │   ├── network_service.dart
+│   │   ├── storage_service.dart
+│   ├── widgets/
+│   │   ├── buttons/
+│   │   ├── text_fields/
+│   │   └── cards/
+│   └── bloc/
+│       └── bloc_observer.dart
+├── features/
+│   ├── auth/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   └── home/
+│       ├── data/
+│       ├── domain/
+│       └── presentation/
+```
+
+## Technology Stack
+
+- **State Management**: BLoC/Cubit
+- **API Integration**: Retrofit with Dio
+- **Local Storage**: SQLite, Secure Storage
+- **Code Generation**: JSON Serialization
+- **Responsive UI**: screen_utils
+- **Localization**: easy_localization
+- **Dependency Injection**: GetIt
+
+## Development Roadmap and Branching Strategy
+
+### 1. Base Setup Branch
+- Project configuration
+- Add core packages
+- Setup assets and resources
+- Create core utilities (constants, colors, strings)
+- Configure localization
+
+### 2. Core Widgets Branch
+- Create reusable buttons
+- Create customized text form fields
+- Create common UI components
+- Setup theme and styling
+
+### 3. Splash and Language Branch
+- Implement splash screen
+- Create language selection screen
+- Setup language switching functionality
+- Configure app initialization flow
+
+### 4. Authentication Branch
+- Login screen
+- Authentication service
+- Token management
+
+### 5. Home Branch
+- Orders
+
+## Core Features and Services
+
+- **Activity Manager**: Tracks 2-minute inactivity for session management
+- **Error Handler**: Centralized error handling and reporting
+- **BLoC Observer**: Monitors and logs state changes across the app
+- **Network Service**: Handles API requests, retries, and connectivity
+- **Storage Service**: Manages local data persistence
+- **Responsive UI**: Ensures consistent layout across devices
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository
+2. Run `flutter pub get` to install dependencies
+3. Make sure to have Flutter SDK installed and configured
+4. Run `flutter run` to launch the application
 
-A few resources to get you started if this is your first Flutter project:
+## Guidelines for Contributors
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Follow the clean architecture principles
+- Create feature branches from develop branch
+- Update documentation when adding new components
+- Follow the naming conventions established in the codebase
