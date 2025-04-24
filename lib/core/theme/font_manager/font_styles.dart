@@ -101,6 +101,11 @@ static TextStyle font16redSemiBold = TextStyle(
       color: ColorsConstants.error,
       fontFamily: FontConstant.fontFamily,
       fontWeight: FontWeightManager.semiBold);
+static TextStyle font16primaryDarkSemiBold = TextStyle(
+      fontSize: FontSize.s16.sp,
+      color: ColorsConstants.primaryDark,
+      fontFamily: FontConstant.fontFamily,
+      fontWeight: FontWeightManager.semiBold);
 
 
 }

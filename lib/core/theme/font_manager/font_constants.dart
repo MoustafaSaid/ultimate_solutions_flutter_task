@@ -35,6 +35,6 @@ class FontWeightManager {
 }
 
 class FontConstant {
-  static String fontFamily = "Poppins";
+  static String fontFamily = "Montserrat";
   static String fontFamily2 = "Poppins";
 }
