@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/login_cubit.dart';
 import 'package:ultimate_solution_flutter_task/core/di/service_locator.dart'
     as di;
+import 'package:ultimate_solution_flutter_task/core/reusable_widgets/choose_language/choose_language.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   const LanguageSelectionScreen({Key? key}) : super(key: key);
@@ -28,55 +29,72 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:  ColorsConstants.darkGrey,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                StringsConstants.chooseLanguage.tr(),
-                style: TextStyles.font16primaryDarkSemiBold,
-              ),
-              SizedBox(height: 40.h),
-              Row(
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 30.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(24.r),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: _buildLanguageOption(
-                      'ar',
-                      'العربية',
-                      StringsConstants.arabic.tr(),
-                      ImagesConstants.arabicFlag,
+                  Text(
+                    StringsConstants.chooseLanguage.tr(),
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF1A3765),
                     ),
                   ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: _buildLanguageOption(
-                      'en',
-                      'English',
-                      StringsConstants.english.tr(),
-                      ImagesConstants.englishFlag,
+                  SizedBox(height: 30.h),
+                  _buildLanguageOptions(),
+                  SizedBox(height: 30.h),
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomMainButton(
+                      text: StringsConstants.apply.tr(),
+
+                      onPressed: _applyLanguageAndNavigate,
+                      backgroundColor:  ColorsConstants.primaryDark,
+                      textStyle: TextStyles.font14whiteSemiBold,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 40.h),
-              SizedBox(
-                width: double.infinity,
-                child: CustomMainButton(
-                  text: StringsConstants.apply.tr(),
-                  onPressed: _applyLanguageAndNavigate,
-                  backgroundColor: const Color(0xFF275F8E),
-                  height: 55,
-                  borderRadius: 15,
-                  textStyle: TextStyles.font16whiteSemiBold,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLanguageOptions() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildLanguageOption(
+            'ar',
+            'العربية',
+            StringsConstants.arabic.tr(),
+            ImagesConstants.arabicFlag,
+          ),
+        ),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: _buildLanguageOption(
+            'en',
+            'English',
+            StringsConstants.english.tr(),
+            ImagesConstants.englishFlag,
+          ),
+        ),
+      ],
     );
   }
 
@@ -108,9 +126,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
         child: Row(
           children: [
             SvgPicture.asset(
-              ImagesConstants.arabicFlag,
-              width: 28.r,
-              height: 28.r,
+              flagAsset,
             ),
             SizedBox(width: 12.w),
             Expanded(

@@ -32,12 +32,17 @@ class OrdersListWidget extends StatelessWidget {
       itemCount: bills.length,
       itemBuilder: (context, index) {
         final bill = bills[index];
+
+        // Parse bill amount as double and convert to integer
+        final billAmount = double.tryParse(bill.billAmount) ?? 0.0;
+        final intAmount = billAmount.toInt();
+
         return OrderCard(
           orderNumber: '#${bill.billNo}',
           status: bill.deliveryStatusName?.isNotEmpty == true
               ? bill.deliveryStatusName ?? 'Unknown'
               : (status == 'new' ? 'New' : 'Processing'),
-          totalPrice: '${bill.billAmount ?? 0} LE',
+          totalPrice: '$intAmount LE',
           date: bill.billDate ?? '',
           onDetailsTap: () {
             // Navigate to order details page

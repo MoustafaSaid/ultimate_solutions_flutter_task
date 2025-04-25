@@ -60,6 +60,10 @@ class SharedPrefsUtils {
     return _prefs?.getString(userNameKey);
   }
 
+  static String? getDeliveryName() {
+    return _prefs?.getString(userNameKey);
+  }
+
   // First run check
   static Future<bool> setFirstRun(bool isFirstRun) async {
     return await _prefs?.setBool(isFirstRunKey, isFirstRun) ?? false;

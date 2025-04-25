@@ -71,19 +71,17 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: Stack(
           children: [
-            // Red circle in top right corner
+            // Red circle in top right corner - fixed position regardless of language
             Positioned(
                 right: 0.w, child: SvgPicture.asset(ImagesConstants.redCircle)),
 
-            // Language globe icon
+            // Language globe icon - fixed position regardless of language
             Positioned(
               right: 16.w,
               top: 50.h,
               child: GestureDetector(
                 onTap: _showLanguageSelector,
                 child: SizedBox(
-                  width: 40.w,
-                  height: 40.h,
                   child: SvgPicture.asset(ImagesConstants.language),
                 ),
               ),
@@ -143,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                             hintStyle: TextStyles.font14BlackRegular,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your User ID';
+                                return StringsConstants.pleaseEnterUserId.tr();
                               }
                               return null;
                             },
@@ -167,7 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                             hintStyle: TextStyles.font14BlackRegular,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
+                                return StringsConstants.pleaseEnterPassword
+                                    .tr();
                               }
                               return null;
                             },
@@ -208,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 44.h,
                               child: CustomMainButton(
                                 text: isLoading
-                                    ? 'Loading...'
+                                    ? StringsConstants.loading.tr()
                                     : StringsConstants.logIn.tr(),
                                 textStyle: TextStyles.font16whiteMedium,
                                 onPressed: isLoading ? () {} : _handleLogin,
