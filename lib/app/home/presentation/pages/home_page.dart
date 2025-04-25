@@ -14,6 +14,7 @@ import 'package:ultimate_solution_flutter_task/app/login/presentation/pages/logi
 import 'package:ultimate_solution_flutter_task/core/constants/images_constants/images_constants.dart';
 import 'package:ultimate_solution_flutter_task/core/di/service_locator.dart';
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/choose_language/choose_language.dart';
+import 'package:ultimate_solution_flutter_task/core/utils/session_timeout_manager.dart';
 import 'package:ultimate_solution_flutter_task/core/utils/shared_prefs_utils.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,6 +53,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // Set language number based on saved language code
     langNo = SharedPrefsUtils.getLanguageCode() == 'ar' ? "1" : "2";
     debugPrint('Using language number: $langNo');
+
+    // Initialize session timeout manager after widget build is complete
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      sl<SessionTimeoutManager>().initialize(context);
+    });
   }
 
   void _handleTabChange() {
