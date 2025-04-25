@@ -8,10 +8,13 @@ import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/logi
 import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/login_state.dart';
 import 'package:ultimate_solution_flutter_task/core/constants/images_constants/images_constants.dart';
 import 'package:ultimate_solution_flutter_task/core/constants/strings_constants/strings_constants.dart';
+import 'package:ultimate_solution_flutter_task/core/di/service_locator.dart'
+    as di;
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/buttons/custom_main_button.dart';
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/choose_language/choose_language.dart';
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/text_form_field/custom_text_form_field.dart';
 import 'package:ultimate_solution_flutter_task/core/theme/font_manager/font_styles.dart';
+import 'package:ultimate_solution_flutter_task/core/utils/session_timeout_manager.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -25,6 +28,15 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Stop session timer on login screen
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      di.sl<SessionTimeoutManager>().stopSessionTimer();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +55,10 @@ class _LoginPageState extends State<LoginPage> {
             );
 
             // Navigate to home page after successful login
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomePage()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
           } else if (state.isError) {
             // Show error message
             ScaffoldMessenger.of(context).showSnackBar(

@@ -17,6 +17,7 @@ import 'package:ultimate_solution_flutter_task/app/login/data/datasources/login_
 import 'package:ultimate_solution_flutter_task/app/login/data/repositories/login_repository_impl.dart';
 import 'package:ultimate_solution_flutter_task/app/login/domain/repositories/login_repository.dart';
 import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/login_cubit.dart';
+import 'package:ultimate_solution_flutter_task/core/utils/session_timeout_manager.dart';
 
 final sl = GetIt.instance;
 
@@ -27,6 +28,9 @@ Future<void> init() async {
         getBillsUseCase: sl(),
         getDeliveryStatusesUseCase: sl(),
       ));
+
+  // Session Management
+  sl.registerLazySingleton(() => SessionTimeoutManager());
 
   // Use cases
   sl.registerLazySingleton(() => GetBillsUseCase(sl()));

@@ -75,10 +75,10 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
                 SizedBox(
                   width: double.infinity,
                   // height: 56.h,
-                  child: CustomMainButton(text: StringsConstants.apply.tr(),
+                  child: CustomMainButton(
+                    text: StringsConstants.apply.tr(),
                     textStyle: TextStyles.font14whiteSemiBold,
-                    onPressed: ()
-                    async {
+                    onPressed: () async {
                       // Save selected language to SharedPreferences
                       await SharedPrefsUtils.setLanguageCode(_selectedLanguage);
 
@@ -88,8 +88,8 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
                       // Close dialog
                       if (!mounted) return;
                       Navigator.of(context).pop();
-
-                  },),
+                    },
+                  ),
                 ),
               ],
             ),
@@ -159,7 +159,6 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
               ClipOval(
                 child: SvgPicture.asset(
                   flagAsset,
-
                 ),
               ),
               SizedBox(width: 12.w),
@@ -174,12 +173,12 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                      Text(
-                        secondaryText,
-                        style: TextStyles.font10blackRegular,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    Text(
+                      secondaryText,
+                      style: TextStyles.font10blackRegular,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
               ),
@@ -189,6 +188,4 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
       ),
     );
   }
-
-
 }
