@@ -98,23 +98,23 @@ class CustomTextField extends StatelessWidget {
         isDense: isDense,
         isCollapsed: isCollapsed,
         helperText: helperText,
-        helperStyle: helperStyle ??
-            TextStyles.font12blackRegular,
+        helperStyle: helperStyle ?? TextStyles.font12blackRegular,
         errorText: errorText,
-        errorStyle: errorStyle ??
-            TextStyles.font12blackRegular,
+        errorStyle: errorStyle ?? TextStyles.font12blackRegular,
         counter: showCounter ? null : const SizedBox.shrink(),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius.r),
           borderSide: BorderSide(
-            color: borderColor ?? ColorsConstants.lightGrey.withValues(alpha: 0.5),
+            color:
+                borderColor ?? ColorsConstants.lightGrey.withValues(alpha: 0.5),
             width: borderWidth,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius.r),
           borderSide: BorderSide(
-            color: borderColor ?? ColorsConstants.lightGrey.withValues(alpha: 0.5),
+            color:
+                borderColor ?? ColorsConstants.lightGrey.withValues(alpha: 0.5),
             width: borderWidth,
           ),
         ),
@@ -144,14 +144,11 @@ class CustomTextField extends StatelessWidget {
             (enabled
                 ? ColorsConstants.black.withValues(alpha: 0.8)
                 : ColorsConstants.lightGrey.withValues(alpha: 0.3)),
-        hintStyle: hintStyle ??
-            TextStyles.font12blackRegular,
-        labelStyle: labelStyle ??
-            TextStyles.font12blackRegular,
+        hintStyle: hintStyle ?? TextStyles.font12blackRegular,
+        labelStyle: labelStyle ?? TextStyles.font12blackRegular,
         alignLabelWithHint: hintTextAlign == TextAlign.center,
       ),
-      style: textStyle ??
-          TextStyles.font12blackRegular,
+      style: textStyle ?? TextStyles.font12blackRegular,
       obscureText: obscureText,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
