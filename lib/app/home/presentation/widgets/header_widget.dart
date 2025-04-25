@@ -48,6 +48,26 @@ class _HeaderWidgetState extends State<HeaderWidget>
   Widget build(BuildContext context) {
     final isArabic = currentLanguageCode == 'ar';
 
+    // Get the delivery person's name from login state in SharedPrefs
+    final deliveryFullName =
+        SharedPrefsUtils.getDeliveryName() ?? 'Delivery Person';
+
+    // Split the name into first and last name components
+    final nameParts = deliveryFullName.split(' ');
+    String firstName = '';
+    String lastName = '';
+
+    if (nameParts.isNotEmpty) {
+      if (nameParts.length == 1) {
+        // Only one name component
+        firstName = nameParts[0];
+      } else {
+        // Multiple name components - first name is first part, last name is everything else
+        firstName = nameParts[0];
+        lastName = nameParts.sublist(1).join(' ');
+      }
+    }
+
     // Use a fixed layout that doesn't change with language
     return Stack(
       children: [
@@ -87,11 +107,11 @@ class _HeaderWidgetState extends State<HeaderWidget>
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'Ahmed\n',
+                  text: '$firstName\n',
                   style: TextStyles.font25whiteMedium,
                 ),
                 TextSpan(
-                  text: 'Othman',
+                  text: lastName,
                   style: TextStyles.font25whiteBold,
                 ),
               ],

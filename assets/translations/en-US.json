@@ -19,5 +19,8 @@
   "delivering":"Delivering",
   "returned":"Returned",
   "delivered":"Delivered",
-  "newItems":"New"
+  "newItems":"New",
+  "pleaseEnterUserId":"Please enter your User ID",
+  "pleaseEnterPassword":"Please enter your password",
+  "loading":"Loading..."
 }

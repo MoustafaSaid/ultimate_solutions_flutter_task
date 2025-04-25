@@ -19,5 +19,8 @@
   "delivering":"جاري التوصيل",
   "returned":"تم الإرجاع",
   "delivered":"تم التسليم",
-  "newItems":"جديد"
+  "newItems":"جديد",
+  "pleaseEnterUserId":"الرجاء إدخال اسم المستخدم",
+  "pleaseEnterPassword":"الرجاء إدخال كلمة المرور",
+  "loading":"جارٍ التحميل..."
 }
