@@ -15,6 +15,7 @@ import 'package:ultimate_solution_flutter_task/core/reusable_widgets/choose_lang
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/text_form_field/custom_text_form_field.dart';
 import 'package:ultimate_solution_flutter_task/core/theme/font_manager/font_styles.dart';
 import 'package:ultimate_solution_flutter_task/core/utils/session_timeout_manager.dart';
+import 'package:ultimate_solution_flutter_task/core/utils/shared_prefs_utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
+  bool isLanguageIconPressed = false;
 
   @override
   void initState() {
@@ -81,8 +83,20 @@ class _LoginPageState extends State<LoginPage> {
               top: 50.h,
               child: GestureDetector(
                 onTap: _showLanguageSelector,
-                child: SizedBox(
-                  child: SvgPicture.asset(ImagesConstants.language),
+                onTapDown: (_) => setState(() => isLanguageIconPressed = true),
+                onTapUp: (_) => setState(() => isLanguageIconPressed = false),
+                onTapCancel: () =>
+                    setState(() => isLanguageIconPressed = false),
+                child: Container(
+                  width: 40.w,
+                  height: 40.h,
+                  alignment: Alignment.center,
+                  color: Colors.transparent,
+                  child: AnimatedScale(
+                    scale: isLanguageIconPressed ? 1.2 : 1.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: SvgPicture.asset(ImagesConstants.language),
+                  ),
                 ),
               ),
             ),
@@ -246,10 +260,33 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showLanguageSelector() {
+    // Show the popup with the current context
     ChooseLanguagePopUp.show(context, (languageCode) async {
-      // Change locale with country code
-      await context
-          .setLocale(Locale(languageCode, languageCode == 'ar' ? 'EG' : 'US'));
+      // Save selected language to SharedPreferences first
+      await SharedPrefsUtils.setLanguageCode(languageCode);
+
+      // Update UI if needed
+      setState(() {
+        // The language icon animation/appearance may need updating
+        isLanguageIconPressed = false;
+      });
+
+      // Change locale with country code - with proper context check
+      if (context.mounted) {
+        await context.setLocale(
+            Locale(languageCode, languageCode == 'ar' ? 'EG' : 'US'));
+
+        // Force rebuild with a slight delay to ensure locale change has propagated
+        if (context.mounted) {
+          Future.delayed(const Duration(milliseconds: 100), () {
+            if (context.mounted) {
+              setState(() {
+                // Additional UI refresh after locale changes
+              });
+            }
+          });
+        }
+      }
     });
   }
 }

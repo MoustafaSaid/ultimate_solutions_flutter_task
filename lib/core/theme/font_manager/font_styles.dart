@@ -32,7 +32,7 @@ class TextStyles {
 
   static TextStyle font16whiteSemiBold = TextStyle(
       fontSize: FontSize.s16.sp,
-      color: ColorsConstants.primaryDark,
+      color: ColorsConstants.white,
       fontFamily: FontConstant.fontFamily2,
       fontWeight: FontWeightManager.semiBold);
   static TextStyle font14primaryDarkSemiBold = TextStyle(

@@ -5,13 +5,25 @@ import 'package:ultimate_solution_flutter_task/core/constants/strings_constants/
 import 'package:ultimate_solution_flutter_task/core/theme/colors_manager/colors_manager.dart';
 import 'package:ultimate_solution_flutter_task/core/theme/font_manager/font_styles.dart';
 
-class TabBarWidget extends StatelessWidget {
+class TabBarWidget extends StatefulWidget {
   final TabController tabController;
 
   const TabBarWidget({
     super.key,
     required this.tabController,
   });
+
+  @override
+  State<TabBarWidget> createState() => _TabBarWidgetState();
+}
+
+class _TabBarWidgetState extends State<TabBarWidget> {
+  @override
+  void didChangeDependencies() {
+    // This will be called when the locale changes
+    context.locale; // Access locale to rebuild when it changes
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +38,7 @@ class TabBarWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: Colors.black.withOpacity(0.05),
               blurRadius: 6.r,
               spreadRadius: 0.5.r,
               offset: const Offset(0, 2),
@@ -36,7 +48,7 @@ class TabBarWidget extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30.r),
           child: TabBar(
-            controller: tabController,
+            controller: widget.tabController,
             labelColor: ColorsConstants.white,
             unselectedLabelColor: ColorsConstants.primaryDark,
             labelStyle: TextStyles.font14whiteSemiBold,
@@ -58,7 +70,7 @@ class TabBarWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     StringsConstants.newItems.tr(),
-                    style: tabController.index == 0
+                    style: widget.tabController.index == 0
                         ? TextStyles.font14whiteSemiBold
                         : TextStyles.font14primaryDarkSemiBold,
                   ),
@@ -69,7 +81,7 @@ class TabBarWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     StringsConstants.others.tr(),
-                    style: tabController.index == 1
+                    style: widget.tabController.index == 1
                         ? TextStyles.font14whiteSemiBold
                         : TextStyles.font14primaryDarkSemiBold,
                   ),

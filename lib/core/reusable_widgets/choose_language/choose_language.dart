@@ -75,11 +75,10 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
                 SizedBox(
                   width: double.infinity,
                   child: CustomMainButton(
+                    textStyle: TextStyles.font14whiteSemiBold,
                     text: StringsConstants.apply.tr(),
-                    textStyle: TextStyles.font16whiteSemiBold,
                     backgroundColor: const Color(0xFF275F8E),
                     height: 55,
-                    borderRadius: 15,
                     onPressed: () async {
                       // Save selected language to SharedPreferences
                       await SharedPrefsUtils.setLanguageCode(_selectedLanguage);
@@ -169,7 +168,6 @@ class _ChooseLanguagePopUpState extends State<ChooseLanguagePopUp> {
                       color: const Color(0xFF1A3765),
                     ),
                   ),
-                  if (secondaryText != primaryText)
                     Text(
                       secondaryText,
                       style: TextStyles.font12primaryDarkBold.copyWith(

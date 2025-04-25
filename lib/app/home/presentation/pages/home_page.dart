@@ -57,6 +57,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // Initialize session timeout manager after widget build is complete
     WidgetsBinding.instance.addPostFrameCallback((_) {
       sl<SessionTimeoutManager>().initialize(context);
+
+      // Force a rebuild of the header widget to ensure delivery name is displayed
+      setState(() {});
     });
   }
 

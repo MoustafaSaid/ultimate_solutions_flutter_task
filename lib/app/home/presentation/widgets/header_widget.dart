@@ -52,20 +52,24 @@ class _HeaderWidgetState extends State<HeaderWidget>
     final deliveryFullName =
         SharedPrefsUtils.getDeliveryName() ?? 'Delivery Person';
 
-    // Split the name into first and last name components
+    // Split the name into multiple components for better display
     final nameParts = deliveryFullName.split(' ');
-    String firstName = '';
-    String lastName = '';
+    List<String> nameSegments = [];
 
-    if (nameParts.isNotEmpty) {
-      if (nameParts.length == 1) {
-        // Only one name component
-        firstName = nameParts[0];
-      } else {
-        // Multiple name components - first name is first part, last name is everything else
-        firstName = nameParts[0];
-        lastName = nameParts.sublist(1).join(' ');
-      }
+    // Process name parts into at most 3 segments
+    if (nameParts.length <= 1) {
+      // Single name
+      nameSegments = [nameParts.first];
+    } else if (nameParts.length == 2) {
+      // First and last name
+      nameSegments = [nameParts.first, nameParts.last];
+    } else {
+      // Multiple name parts - organize into 3 segments
+      nameSegments = [
+        nameParts.first, // First name
+        nameParts[1], // Middle name or part of last name
+        nameParts.sublist(2).join(' ') // Everything else combined
+      ];
     }
 
     // Use a fixed layout that doesn't change with language
@@ -98,23 +102,35 @@ class _HeaderWidgetState extends State<HeaderWidget>
           ),
         ),
 
-        // User info - fixed position
+        // User info - fixed position with smaller text
         Positioned(
           left: 16.w,
           top: MediaQuery.of(context).padding.top + 23.h,
-          child: RichText(
-            textAlign: TextAlign.left,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '$firstName\n',
-                  style: TextStyles.font25whiteMedium,
-                ),
-                TextSpan(
-                  text: lastName,
-                  style: TextStyles.font25whiteBold,
-                ),
-              ],
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5, // Limit width
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: nameSegments.asMap().entries.map((entry) {
+                final index = entry.key;
+                final segment = entry.value;
+
+                // Make the first segment medium weight, middle bold, last extra bold
+                TextStyle style;
+                if (index == 0) {
+                  style = TextStyles.font16whiteMedium;
+                } else if (index == 1) {
+                  style = TextStyles.font16whiteSemiBold;
+                } else {
+                  style = TextStyles.font14whiteSemiBold;
+                }
+
+                return Text(
+                  segment,
+                  style: style,
+                  overflow: TextOverflow.ellipsis,
+                );
+              }).toList(),
             ),
           ),
         ),
@@ -179,20 +195,37 @@ class _HeaderWidgetState extends State<HeaderWidget>
       // Save selected language to SharedPreferences first
       await SharedPrefsUtils.setLanguageCode(languageCode);
 
+      // Update langNo for API calls
       setState(() {
         langNo = languageCode == 'ar' ? "1" : "2";
       });
 
       // Change locale with country code
-      await context
-          .setLocale(Locale(languageCode, languageCode == 'ar' ? 'EG' : 'US'));
+      if (context.mounted) {
+        await context.setLocale(
+            Locale(languageCode, languageCode == 'ar' ? 'EG' : 'US'));
+      }
 
       // Refresh data with new language - using the widget's HomeCubit
       if (context.mounted) {
+        // Trigger a full refresh
         context.read<HomeCubit>().refreshData(
               deliveryNo: widget.deliveryNo,
               langNo: langNo,
             );
+
+        // Force the parent to rebuild as well
+        if (context.mounted) {
+          Future.delayed(const Duration(milliseconds: 100), () {
+            if (context.mounted) {
+              // Find any state widget that has a setState method
+              final ancestor = context.findAncestorStateOfType<State>();
+              if (ancestor != null && ancestor.mounted) {
+                ancestor.setState(() {});
+              }
+            }
+          });
+        }
       }
     });
   }
