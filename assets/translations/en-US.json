@@ -15,7 +15,7 @@
   "status":"Status",
   "totalPrice":"Total price",
   "date":"Date",
-  "orderDetails":"Order Details",
+  "orderDetails":"Order\nDetails",
   "delivering":"Delivering",
   "returned":"Returned",
   "delivered":"Delivered",

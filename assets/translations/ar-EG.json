@@ -15,7 +15,7 @@
   "status":"الحالة",
   "totalPrice":"إجمالي السعر",
   "date":"التاريخ",
-  "orderDetails":"تفاصيل الطلب",
+  "orderDetails":"تفاصيل\nالطلب",
   "delivering":"جاري التوصيل",
   "returned":"تم الإرجاع",
   "delivered":"تم التسليم",

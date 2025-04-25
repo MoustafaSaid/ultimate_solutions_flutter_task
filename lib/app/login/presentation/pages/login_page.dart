@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ultimate_solution_flutter_task/app/home/presentation/pages/home_page.dart';
 import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/login_cubit.dart';
 import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/login_state.dart';
 import 'package:ultimate_solution_flutter_task/core/constants/images_constants/images_constants.dart';
 import 'package:ultimate_solution_flutter_task/core/constants/strings_constants/strings_constants.dart';
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/buttons/custom_main_button.dart';
+import 'package:ultimate_solution_flutter_task/core/reusable_widgets/choose_language/choose_language.dart';
 import 'package:ultimate_solution_flutter_task/core/reusable_widgets/text_form_field/custom_text_form_field.dart';
 import 'package:ultimate_solution_flutter_task/core/theme/font_manager/font_styles.dart';
 
@@ -40,8 +42,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
 
-            // Navigate to home/dashboard page after successful login
-            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+            // Navigate to home page after successful login
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
           } else if (state.isError) {
             // Show error message
             ScaffoldMessenger.of(context).showSnackBar(
@@ -62,8 +65,14 @@ class _LoginPageState extends State<LoginPage> {
             Positioned(
               right: 16.w,
               top: 50.h,
-              child:
-                  SizedBox(child: SvgPicture.asset(ImagesConstants.language)),
+              child: GestureDetector(
+                onTap: _showLanguageSelector,
+                child: SizedBox(
+                  width: 40.w,
+                  height: 40.h,
+                  child: SvgPicture.asset(ImagesConstants.language),
+                ),
+              ),
             ),
 
             SafeArea(
@@ -221,5 +230,13 @@ class _LoginPageState extends State<LoginPage> {
             password: passwordController.text,
           );
     }
+  }
+
+  void _showLanguageSelector() {
+    ChooseLanguagePopUp.show(context, (languageCode) async {
+      // Change locale with country code
+      await context
+          .setLocale(Locale(languageCode, languageCode == 'ar' ? 'EG' : 'US'));
+    });
   }
 }

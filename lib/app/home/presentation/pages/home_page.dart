@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ultimate_solution_flutter_task/app/home/presentation/cubit/home_cubit.dart';
 import 'package:ultimate_solution_flutter_task/app/home/presentation/cubit/home_state.dart';
 import 'package:ultimate_solution_flutter_task/app/home/presentation/widgets/empty_orders_widget.dart';
@@ -8,7 +10,11 @@ import 'package:ultimate_solution_flutter_task/app/home/presentation/widgets/hea
 import 'package:ultimate_solution_flutter_task/app/home/presentation/widgets/loading_widget.dart';
 import 'package:ultimate_solution_flutter_task/app/home/presentation/widgets/orders_list_widget.dart';
 import 'package:ultimate_solution_flutter_task/app/home/presentation/widgets/tab_bar_widget.dart';
+import 'package:ultimate_solution_flutter_task/app/login/presentation/pages/login_page.dart';
+import 'package:ultimate_solution_flutter_task/core/constants/images_constants/images_constants.dart';
 import 'package:ultimate_solution_flutter_task/core/di/service_locator.dart';
+import 'package:ultimate_solution_flutter_task/core/reusable_widgets/choose_language/choose_language.dart';
+import 'package:ultimate_solution_flutter_task/core/utils/shared_prefs_utils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,10 +25,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tabController;
-
-  // Constants for API parameters
-  static const String deliveryNo = "1010";
-  static const String langNo = "1";
+  String? deliveryNo;
+  String langNo = "2"; // Default to English
 
   @override
   void initState() {
@@ -35,12 +39,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
 
     _tabController.addListener(_handleTabChange);
+
+    // Get saved delivery number
+    deliveryNo = SharedPrefsUtils.getDeliveryNo();
+    if (deliveryNo == null) {
+      debugPrint('No cached delivery number found, using default');
+      deliveryNo = "1010"; // Default if not available
+    } else {
+      debugPrint('Using cached delivery number: $deliveryNo');
+    }
+
+    // Set language number based on saved language code
+    langNo = SharedPrefsUtils.getLanguageCode() == 'ar' ? "1" : "2";
+    debugPrint('Using language number: $langNo');
   }
 
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
       setState(() {});
     }
+  }
+
+  // Update language after it changes in the header
+  void updateLanguage(String newLangNo) {
+    setState(() {
+      langNo = newLangNo;
+    });
+
+    // Refresh data with new language
+    context.read<HomeCubit>().refreshData(
+          deliveryNo: deliveryNo!,
+          langNo: langNo,
+        );
   }
 
   @override
@@ -55,13 +85,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return BlocProvider(
       create: (context) => sl<HomeCubit>()
         ..fetchData(
-          deliveryNo: deliveryNo,
+          deliveryNo: deliveryNo!,
           langNo: langNo,
         ),
       child: Scaffold(
         body: Column(
           children: [
-            const HeaderWidget(),
+            Stack(
+              children: [
+                HeaderWidget(deliveryNo: deliveryNo!),
+                // Language icon for switching
+                // Positioned(
+                //   right: 16,
+                //   top: 40,
+                //   child: GestureDetector(
+                //     onTap: _showLanguageSelector,
+                //     child: SvgPicture.asset(
+                //       ImagesConstants.language,
+                //       width: 28,
+                //       height: 28,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
             TabBarWidget(tabController: _tabController),
             BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
@@ -101,7 +148,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     child: ErrorDisplayWidget(
                       message: state.errorMessage,
                       onRetry: () => context.read<HomeCubit>().refreshData(
-                            deliveryNo: deliveryNo,
+                            deliveryNo: deliveryNo!,
                             langNo: langNo,
                           ),
                     ),
@@ -171,17 +218,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               },
             ),
           ],
-        ),
-        floatingActionButton: BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            return FloatingActionButton(
-              onPressed: () => context.read<HomeCubit>().refreshData(
-                    deliveryNo: deliveryNo,
-                    langNo: langNo,
-                  ),
-              child: const Icon(Icons.refresh),
-            );
-          },
         ),
       ),
     );

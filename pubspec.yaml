@@ -62,7 +62,8 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/translations/
+    - assets/translations/en-US.json
+    - assets/translations/ar-EG.json
     - assets/fonts/
 
   fonts:
