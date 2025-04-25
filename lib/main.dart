@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ultimate_solution_flutter_task/app/home/home_page.dart';
+import 'package:ultimate_solution_flutter_task/app/home/presentation/pages/home_page.dart';
 import 'package:ultimate_solution_flutter_task/app/login/presentation/cubit/login_cubit.dart';
 import 'package:ultimate_solution_flutter_task/app/login/presentation/pages/login_page.dart';
 import 'package:ultimate_solution_flutter_task/core/di/service_locator.dart'
@@ -31,13 +31,16 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Orders Delivery',
           theme: ThemeData(
+            primaryColor: Colors.blue,
             primarySwatch: Colors.blue,
             scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              elevation: 0,
+            ),
           ),
-          home: BlocProvider(
-            create: (context) => di.sl<LoginCubit>(),
-            child: const HomePage(),
-          ),
+          home: const HomePage(),
         );
       },
     );
