@@ -217,7 +217,7 @@ class OrderCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        'Order\nDetails',
+                        StringsConstants.orderDetails.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyles.font8whiteRegular.copyWith(
                           fontSize: screenWidth < 360 ? 7 : 8,

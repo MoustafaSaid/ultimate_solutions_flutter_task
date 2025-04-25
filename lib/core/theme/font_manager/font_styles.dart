@@ -47,7 +47,7 @@ class TextStyles {
       fontWeight: FontWeightManager.semiBold);
   static TextStyle font23blackSemiBold = TextStyle(
       fontSize: FontSize.s23.sp,
-      color: ColorsConstants.white,
+      color: ColorsConstants.black,
       fontFamily: FontConstant.fontFamily,
       fontWeight: FontWeightManager.semiBold);
 
