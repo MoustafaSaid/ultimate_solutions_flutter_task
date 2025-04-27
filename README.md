@@ -97,3 +97,10 @@ lib/
 - Create feature branches from develop branch
 - Update documentation when adding new components
 - Follow the naming conventions established in the codebase
+
+## Clarification
+- For those concerned. 
+- the task was sent to me on Wednesday and will be delivered on Friday.
+- There wasn't enough time to work on Wednesday and Thursday since they are both work days. 
+- I tried my best to complete the task as best as possible. 
+- Sorry if it wasn't as expected. Thank you.
